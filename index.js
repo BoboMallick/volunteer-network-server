@@ -10,11 +10,11 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cors());
 
-const dbUser = process.env.DB_USER;
-const dbpass = process.env.DB_PASS;
-const dbName = process.env.DB_NAME;
+// const dbUser = process.env.DB_USER;
+// const dbpass = process.env.DB_PASS;
+// const dbName = process.env.DB_NAME;
 
-const uri = `mongodb+srv://${dbUser}:${dbpass}@cluster0.noogs.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.noogs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 
 
@@ -67,7 +67,7 @@ client.connect(err => {
       })
   })
 
-  app.delete('/delete/:id', (req, res) => { // delete register volunteer
+  app.delete('/delete/:id', (req, res) => { 
     regCollection.deleteOne({ _id: ObjectID(req.params.id) })
       .then(result => {
         res.status(200).send(result.deletedCount > 0);
